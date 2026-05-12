@@ -29,5 +29,8 @@ function stop(evenement) {
   if (!keySound) return;
 
   key.classList.remove("playing");
-//   keySound.pause();
 }
+
+
+
+

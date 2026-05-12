@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Drumpad</title>
     <script src="./main.js" defer></script>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.ico" />
   </head>
   <body>
     <h1>DRUM PAD</h1>
@@ -46,7 +47,14 @@
         <kbd>C</kbd>
         <span class="sound">tink</span>
       </div>
-      <!-- Générer les 8 boxes restantes correspondant aux fichiers audio à jouer -->
+      <div data-key="82" class="key">
+        <kbd>R</kbd>
+        <span class="">Enregistrer</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="">Rejouer</span>
+      </div>
     </div>
     <!-- Audio source -->
     <audio
