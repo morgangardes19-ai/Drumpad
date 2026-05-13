@@ -1,6 +1,6 @@
 let touchesEnregistrees = [];
 let enEnregistrement = false;
-
+let debutEnregistrement;
 
 addEventListener("keydown", playSound);
 
@@ -26,11 +26,12 @@ function playSound(evenement) {
   key.classList.add("playing");
   keySound.currentTime = 0;
   keySound.play();
- 
+
   if (enEnregistrement) {
-    touchesEnregistrees.push(evenement.keyCode);
-   
-    
+    touchesEnregistrees.push([
+      evenement.keyCode,
+      Date.now() - debutEnregistrement,
+    ]);
   }
 }
 
@@ -54,24 +55,39 @@ function stop(evenement) {
 function enregistrer(key) {
   // cette fonction démarre ou coupe l'enregistrement
   key.classList.toggle("playing");
-// !enEnregistrement signifie l'opposé
-  enEnregistrement = !enEnregistrement
-//  si on démarre un enregistrement on remet le tableau de touches enregistrées vide
-   if (enEnregistrement) {
+  // !enEnregistrement signifie l'opposé
+  enEnregistrement = !enEnregistrement;
+  //  si on démarre un enregistrement on remet le tableau de touches enregistrées vide
+  if (enEnregistrement) {
     touchesEnregistrees = [];
-   }
+    debutEnregistrement = Date.now();
+  }
 }
 /**
  * @param {Element} key - La touche à enregistrer
  */
 function rejouer(key) {
   // console.log(key);
-  
+  console.log(touchesEnregistrees);
+
   key.classList.toggle("playing");
 
-  // exemple de création artificiel d'évènement
-  // dispatchEvent(new KeyboardEvent("keydown", { keyCode: 87 }));
-  // setTimeout(() => {
-  //   dispatchEvent(new KeyboardEvent("keyup", { keyCode: 87 }));
-  // }, 300);
+  touchesEnregistrees.forEach((touche) => {
+    // console.log(touche);
+
+    setTimeout(() => {
+      dispatchEvent(new KeyboardEvent("keydown", { keyCode: touche[0] }));
+      setTimeout(() => {
+        dispatchEvent(new KeyboardEvent("keyup", { keyCode: touche[0] }));
+      }, 300);
+    }, touche[1]);
+  });
+
+  // Lorsque le temps qu'on a mis le temps pour jouer la dernière touche + 200, on enlève l'animation de la touche rejouée
+  setTimeout(
+    () => {
+      key.classList.toggle("playing");
+    },
+    touchesEnregistrees[touchesEnregistrees.length - 1][1] + 200,
+  );
 }
