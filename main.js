@@ -1,12 +1,3 @@
-// let enregistrement = document.querySelector(".enregistrer");
-
-// enregistrement.addEventListener("keydown", handleKeydown);
-
-// function handleKeydown() {
-//
-//  });
-// }
-
 addEventListener("keydown", playSound);
 
 function playSound(evenement) {
@@ -15,8 +6,6 @@ function playSound(evenement) {
 
   let key = document.querySelector(`div[data-key="${evenement.keyCode}"]`);
 // console.log(typeof evenement.keyCode);
-  // let key = document.querySelector(`div[data-key2="${evenement.keyCode}"]`);
-
 
   let keySound = document.querySelector(
     `audio[data-key="${evenement.keyCode}"]`,
@@ -25,6 +14,9 @@ function playSound(evenement) {
   if (!key) return;
   if (evenement.keyCode === 82) {
     enregistrer(key);
+  }
+     if (evenement.keyCode === 70) {
+    rejouer(key);
   }
   if (!keySound) return;
 
@@ -55,5 +47,7 @@ function enregistrer(key) {
   key.classList.toggle("playing");
 }
 
-
-
+function rejouer(key) {
+  // console.log(key);
+  key.classList.toggle("playing");
+}
